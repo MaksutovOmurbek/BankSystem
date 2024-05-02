@@ -35,6 +35,29 @@ class HistoryTransfer(models.Model):
     is_completed = models.BooleanField(default=False, verbose_name='Статус перевода ')
     amount = models.PositiveIntegerField(verbose_name='Сумма', default=0)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания ')
+    
+    def save(self, *args, **kwargs):            
+        if self.is_completed:
+            raise ValueError("Транзакция прошла не успешна")
+        
+        if not self.is_completed:
+            from_user_balance = self.from_user.balance
+            to_user_wallet = self.to_user.balance
+
+        if from_user_balance < self.amount:
+            raise ValueError("Недостаточно средств на вашем балансе")
+        
+        if self.from_user == self.to_user:
+            raise ValueError("Нельзя отправить средства самому себе")
+
+        self.from_user.balance -= self.amount
+        self.to_user.balance += self.amount
+
+        self.is_completed = True
+
+        self.from_user.save()
+        self.to_user.save()
+        super(HistoryTransfer, self).save(*args, **kwargs)
 
 
     def __str__(self):

@@ -22,12 +22,13 @@ from django.conf import settings
 
 
 api_urlpatterns = [
-    path('users/', include('apps.users.urls')),
+    path('', include('apps.users.urls')),
+
 
 ]
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include(api_urlpatterns)),
+    path('api/', include(api_urlpatterns)),
 
 ]
 
