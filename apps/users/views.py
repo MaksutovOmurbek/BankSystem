@@ -3,7 +3,7 @@ from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from apps.users.models import User, HistoryTransfer
-from apps.users.serializers import UserSerializer, HistoryTransferSeralizer
+from apps.users.serializers import UserSerializer, HistoryTransferSerializer
 from apps.users.permissions import UserPermissions
 
 class UserAPIVIewsSet(GenericViewSet,
@@ -35,6 +35,9 @@ class HistoryTransferAPIVIewsSet(GenericViewSet,
                       mixins.UpdateModelMixin,
                       mixins.DestroyModelMixin):
     queryset = HistoryTransfer.objects.all()
-    serializer_class = HistoryTransferSeralizer
+    serializer_class = HistoryTransferSerializer()
+    
+
+
 
     

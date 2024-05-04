@@ -7,11 +7,9 @@ from apps.users.models import User, HistoryTransfer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username', 'phone_number', 'age', "balance", 'wallet_address')
+        fields = ('id', 'username', 'phone_number', 'age', 'balance', 'wallet_address')
         
-class HistoryTransferSeralizer(serializers.ModelSerializer):
+class HistoryTransferSerializer(serializers.ModelSerializer):
     class Meta:
         model = HistoryTransfer
-        fields = ('id', 'from_user', 'to_user', 'is_completed',
-                  'amount')
-        
+        fields = ('id', 'from_user', 'to_user', 'is_completed', 'amount')
